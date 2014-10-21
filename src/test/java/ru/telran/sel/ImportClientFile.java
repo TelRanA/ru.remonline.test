@@ -29,8 +29,8 @@ public class ImportClientFile extends ru.telran.sel.pages.TestBase {
 		clickToLogin();
 		fillLoginForm(new LoginData("qazwsx", "qazwsx"));
 		clickOnEnter();
-		driver.findElement(By.xpath("//a[@href='#!/clients']")).click();
-		driver.findElement(By.xpath("//button[@class='h-ml-15 pull-left btn btn-sm btn-default js-import js-tooltip']")).click();
+		driver.findElement(By.xpath("//a[@href='#!/warehouse']")).click();   //<a class="b-sidebar__item" href="#!/warehouse">
+		driver.findElement(By.xpath("//button[@class='pull-left btn btn-sm btn-default js-import js-tooltip']")).click();  
 		driver.findElement(By.xpath("//button[@class='btn btn-sm btn-default js-upload-btn']")).click(); // open the dialog window
 		//((JavascriptExecutor)driver).executeScript("document.getElementsByTagName('input')[0].style.display='block';"); //javascript for changing the stype of element
 		//((JavascriptExecutor)driver).executeScript("document.getElementsByTagName('input')[0].value='D:\\dasha\\client.xls';"); // javascript but it is not working, cuz element 'input' is invisible
