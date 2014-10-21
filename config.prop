@@ -1,2 +1,7 @@
 *file for testing import
-i_file=\\test\\resources\\client.xls
+i_client=\\test\\resources\\client.xls
+i_prod=\\test\\resources\\products.xls
+*-------------------------------------------------
+*file with data for creation an excel file with product import data 
+*file includes 4 columns(cod;article;name;balance;price;category)
+testDataImportProd=\\test\\resources\\ImportProductData.txt
