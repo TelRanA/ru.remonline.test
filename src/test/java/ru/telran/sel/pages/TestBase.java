@@ -1,8 +1,16 @@
 package ru.telran.sel.pages;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Alert;
@@ -124,6 +132,108 @@ public class TestBase {
 	} finally {
 	acceptNextAlert = true;
 	}
+	}
+	
+	public String getProperty(String prop){
+		String value ="";
+		File configFile = new File("config.prop");
+		
+		try {
+		    FileReader reader = new FileReader(configFile);		    
+		    Properties props = new Properties();		    
+		    props.load(reader);
+		 
+		    value = props.getProperty(prop);
+		    
+		    reader.close();
+		} catch (FileNotFoundException ex) {
+		    JOptionPane.showMessageDialog(new JFrame(), "file does not exist.");
+		} catch (IOException ex) {
+		    // I/O error
+		}
+		
+		return value;
+	}
+	
+	public void printSpecSymb(int nSymbol) throws Exception{
+		Robot robot = new Robot();
+		switch (nSymbol) {
+		case 1: {
+			robot.delay(20);
+			robot.keyPress(KeyEvent.VK_ALT);
+			robot.delay(20);
+			robot.keyPress(KeyEvent.VK_NUMPAD0);
+			robot.keyRelease(KeyEvent.VK_NUMPAD0);
+			robot.delay(20);
+			robot.keyPress(KeyEvent.VK_NUMPAD0);
+			robot.keyRelease(KeyEvent.VK_NUMPAD0);
+			robot.delay(20);
+			robot.keyPress(KeyEvent.VK_NUMPAD9);
+			robot.keyRelease(KeyEvent.VK_NUMPAD9);
+			robot.delay(20);
+			robot.keyPress(KeyEvent.VK_NUMPAD2);
+			robot.keyRelease(KeyEvent.VK_NUMPAD2);
+			robot.delay(20);
+			robot.keyRelease(KeyEvent.VK_ALT);
+		}
+			;
+			break;
+		case 2: {
+			robot.delay(20);
+			robot.keyPress(KeyEvent.VK_ALT);
+			robot.delay(20);
+			robot.keyPress(KeyEvent.VK_NUMPAD5);
+			robot.keyRelease(KeyEvent.VK_NUMPAD5);
+			robot.delay(20);
+			robot.keyPress(KeyEvent.VK_NUMPAD8);
+			robot.keyRelease(KeyEvent.VK_NUMPAD8);
+			robot.delay(20);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.delay(20);
+		}
+			;
+			break;
+		case 3: {
+			robot.keyPress(KeyEvent.VK_PERIOD);
+			robot.keyRelease(KeyEvent.VK_PERIOD);
+		}
+			;
+			break;
+		}
+	}
+	
+	
+	
+	public void printFilePath(String prorerty) throws Exception{
+		Robot robot = new Robot();
+		
+		File file = new File("src");
+		String absolutePath = file.getAbsolutePath().toLowerCase();
+	
+		String iFilePath = absolutePath+getProperty(prorerty);//"d:\\dasha\\client.xls";
+		for(int i=0; i<iFilePath.length();i++){
+			char symbol=iFilePath.charAt(i);
+			int asciiSymbol = (int) symbol;
+			if (asciiSymbol > 96 && asciiSymbol < 123) {
+				asciiSymbol = asciiSymbol-32;
+				robot.keyPress(asciiSymbol);
+				robot.keyRelease(asciiSymbol);
+			} else {
+				if (symbol == '\\') {
+					printSpecSymb(1);
+				} else {
+					if (symbol == ':') {
+						printSpecSymb(2);
+					} else {
+						if (symbol == '.') {
+							printSpecSymb(3);
+						}
+					}
+				}
+			}
+		}
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
 	}
 
 //	@AfterMethod

@@ -41,119 +41,13 @@ public class ImportClientFile extends ru.telran.sel.pages.TestBase {
 		*/
 		//driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		Thread.sleep(5000);
-		printFilePath();
+		printFilePath("i_client");
 		Thread.sleep(10000);
 		driver.findElement(By.xpath("//button[@class='btn btn-primary js-do-import']")).click(); //clink on the button for import
 		checkImport();
 	}
 	
-	public String loadFilePath(String prop){
-		String value ="";
-		File configFile = new File("config.prop");
-		
-		try {
-		    FileReader reader = new FileReader(configFile);		    
-		    Properties props = new Properties();		    
-		    props.load(reader);
-		 
-		    value = props.getProperty(prop);
-		    
-		    reader.close();
-		} catch (FileNotFoundException ex) {
-		    JOptionPane.showMessageDialog(new JFrame(), "file does not exist.");
-		} catch (IOException ex) {
-		    // I/O error
-		}
-		
-		return value;
-	}
 	
-	
-	public void printSpecSymb(int nSymbol) throws Exception{
-		Robot robot = new Robot();
-		switch (nSymbol) {
-		case 1: {
-			robot.delay(20);
-			robot.keyPress(KeyEvent.VK_ALT);
-			robot.delay(20);
-			robot.keyPress(KeyEvent.VK_NUMPAD0);
-			robot.keyRelease(KeyEvent.VK_NUMPAD0);
-			robot.delay(20);
-			robot.keyPress(KeyEvent.VK_NUMPAD0);
-			robot.keyRelease(KeyEvent.VK_NUMPAD0);
-			robot.delay(20);
-			robot.keyPress(KeyEvent.VK_NUMPAD9);
-			robot.keyRelease(KeyEvent.VK_NUMPAD9);
-			robot.delay(20);
-			robot.keyPress(KeyEvent.VK_NUMPAD2);
-			robot.keyRelease(KeyEvent.VK_NUMPAD2);
-			robot.delay(20);
-			robot.keyRelease(KeyEvent.VK_ALT);
-		}
-			;
-			break;
-		case 2: {
-			robot.delay(20);
-			robot.keyPress(KeyEvent.VK_ALT);
-			robot.delay(20);
-			robot.keyPress(KeyEvent.VK_NUMPAD5);
-			robot.keyRelease(KeyEvent.VK_NUMPAD5);
-			robot.delay(20);
-			robot.keyPress(KeyEvent.VK_NUMPAD8);
-			robot.keyRelease(KeyEvent.VK_NUMPAD8);
-			robot.delay(20);
-			robot.keyRelease(KeyEvent.VK_ALT);
-			robot.delay(20);
-		}
-			;
-			break;
-		case 3: {
-			robot.keyPress(KeyEvent.VK_PERIOD);
-			robot.keyRelease(KeyEvent.VK_PERIOD);
-		}
-			;
-			break;
-		}
-	}
-	
-	
-	
-	public void printFilePath() throws Exception{
-		Robot robot = new Robot();
-		
-		File file = new File("src");
-		String absolutePath = file.getAbsolutePath().toLowerCase();
-	
-		/*String internalPath = this.getClass().getName().replace(".", File.separator);
-		String externalPath = System.getProperty("user.dir")+File.separator+"src";
-		String workDir = externalPath+File.separator+internalPath.substring(0, internalPath.lastIndexOf(File.separator));
-		System.out.println(workDir);*/
-		
-		String iFilePath = absolutePath+loadFilePath("i_file");//"d:\\dasha\\client.xls";
-		for(int i=0; i<iFilePath.length();i++){
-			char symbol=iFilePath.charAt(i);
-			int asciiSymbol = (int) symbol;
-			if (asciiSymbol > 96 && asciiSymbol < 123) {
-				asciiSymbol = asciiSymbol-32;
-				robot.keyPress(asciiSymbol);
-				robot.keyRelease(asciiSymbol);
-			} else {
-				if (symbol == '\\') {
-					printSpecSymb(1);
-				} else {
-					if (symbol == ':') {
-						printSpecSymb(2);
-					} else {
-						if (symbol == '.') {
-							printSpecSymb(3);
-						}
-					}
-				}
-			}
-		}
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-	}
 	
 	public void checkImport(){
 	    try {
